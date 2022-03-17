@@ -4,19 +4,19 @@ kind: Namespace
 metadata:
   name: {{.Values.namespace}}
 {{- end}}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-jhttp-svc
-  labels:
-    app: jhttp
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  selector:
-    app: jhttp
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: my-jhttp-svc
+#   labels:
+#     app: jhttp
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 80
+#   selector:
+#     app: jhttp
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,7 +26,7 @@ metadata:
   name: jhttp
   namespace: {{.Values.namespace}}
 spec:
-  replicas: 3
+  replicas: {{int .Values.replicas}}
   selector:
     matchLabels:
       app: jhttp
@@ -41,3 +41,10 @@ spec:
         name: jhttp-state-hc2cp
         ports:
         - containerPort: 80
+        resources:
+          limits:
+            memory: 1024Mi
+            cpu: 100m
+          requests:
+            memory: 1024Mi
+            cpu: 100m
