@@ -1,4 +1,4 @@
-name: <+stage.variables.name>
+name: <+pipeline.variables.serviceName>
 replicas: 2
 
 image: <+artifact.image>
@@ -21,6 +21,8 @@ serviceTargetPort: 80
 # The following two maps, config and secrets, are put into a ConfigMap
 # and a Secret, respectively.
 # Both are added to the container environment in podSpec as envFrom source.
+
+
 # env:
 #   config:
 #     key1: value10
